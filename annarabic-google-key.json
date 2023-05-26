@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "annarabic",
+  "private_key_id": "c3fac203d56aa911ae8c01c0f51bad5832836bce",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDcEfCnk74Sm5Rm\nWbfQnH3RD7BOMrJzxbnFbujmDTqUMgThVimofCmHD++qPIsvlUF2uKt9tebZn/vl\ni2DeGAFzRxgzh/hDieeigoCQJ1fTTf7hrY58R4osriJNyikOqgQUfIhzUEmQOWBQ\nfk/344D/LlVZHeHrrfwNAM6NR2a095Z2tG/opqWyas+H/EIBXfjhoA9W9F+pp7kU\nAly4M9DJxZiCXIlCzd0Lqbm1Suoga3BOQQAUIM5psIzfShl8OWYFFUfrREJoi7np\nCvE2homdpVMTO8qK7f+KZZfWmzSlAPSMOHkxcSZXvHtW6H6CE6a/9qly0vBHOdKR\nbYJH0yr7AgMBAAECggEAVGHInejHg8kF8OzLz4CBuazDVGiaBkw1fB+Xy8YcxQAc\n4O4x0PmyzqfspKDMWbVoQYZzsyMRXja61nxH60DXJYWIIRIsvnDdUXGqrBt50Hri\nlVQAA2VG9PTcEGnIrmfAYr6Rb23Elzl41cRpE0q3hqEUdrQ/kSfIMpAxovhSyGZE\n0xbaAmrxgnmxBXKV5k9s+iqaCphDiBsbIoIpAjwUzSJzbiMEkDgaGzrdFND4IyR5\nm38TyW0X1FNHmNuN8B//J6m7F1obLYnpZNBO1z8XdjrKqoNcjIqy88GyoJ8lRjOC\nzZUsJMFRD5pm+DVXBf6YLXqXGdI1VJJFpRiGMBsFmQKBgQDvKzYlURn8ie6jWBFv\nV0JRaaFVZJEU0Y3zgujuXqrfD5KUaF2yDZQ42rI/+bsC1JMAO9MR0sBkyRmmP84j\npL5es6upnk7sUhcVjsDpChD8Cn56jKdK6GypYGAHrautpB0FiyciLndtKmqz2KF8\ntntLvCFXGQsNQuoKQyxmGvss9QKBgQDrjqb1ZuUO0HQRi63zD8Pduyzc9YMlrTcb\n7fmkGDjuiVZ5BEgPj/fRKlhdcgdaBAxi1CBUgv6+Osum9ddvc86x82dzcPVuySHR\noOGFx3D4vkr967Cn7+/3kbaGbXqgrBpAweKxxa7mBd52PgWm+yoGHLae/JAJqPcJ\nmnb9DmwCLwKBgDETpOCza6muhBFwmONH/IvIKRrksACdn4tAaZvAQT/UajeZ0uAe\neTPRbJJEJGPISwHZRM57eI811NWQcjROMeIs7CS6H2fO0H3T9THcpu+RF7L9+bYd\nS27WH95zfK785helHjqdXlRAR/TvlvOIXnSD/jNpKCNof63rasjo8HGhAoGAKuPt\nmI9ks77W837obHJ5an0zXQRDHfAdMbOyGePjMePF4AEckeDX8bjxIAqsNgK4sqIH\nRPwZIFAaVss6r+t5PkOgmY9+0O5EfyP5DF/VPSWBCB0LLHjuy7g3cOCsTGcp3JKx\nEUd6Yh29dPA0HURsUXKW+fnozCl82b3LXqZqmjcCgYEA1BGfxiboKWqkrpqtx/VA\nOz72GoT8wRO9UcxAqx9e9NEyAiS4mBSr4wh47aAnbC8PtZDx4l9W4YtKSj1woDQZ\nDeNzLGKn7lGQsNbWHHS9DrD/ReK9uWREwFk3ffSJqwKMdbCOnhEbBd16CthWdKxt\npRgzRRuRz4AOFWQ42jwaP4U=\n-----END PRIVATE KEY-----\n",
+  "client_email": "annarabic-service-account@annarabic.iam.gserviceaccount.com",
+  "client_id": "117337116824247807772",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/annarabic-service-account%40annarabic.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
