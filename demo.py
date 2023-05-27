@@ -10,10 +10,25 @@ import requests
 import openai
 from google.cloud import speech_v1p1beta1 as speech
 import yt_dlp as youtube_dl
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./annarabic-google-key.json"
 
+def insert_row(worksheet_name, values):
+      scope = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive",
+    ]
+  creds = ServiceAccountCredentials.from_json_keyfile_name(
+          "/content/annarabic-google-key.json", scope
+      )
+  client = gspread.authorize(creds)
+
+  sheet = client.open_by_key("1oWLRklgRUulfseyqcQJ_Tv164HiTnnV5i0f212o_-g0").worksheet(worksheet_name)
+
+  sheet.append_rows([values], value_input_option='RAW', insert_data_option=None, table_range=None)
 
 def download_yt_audio(yt_url, filename):
     info_loader = youtube_dl.YoutubeDL()
@@ -227,8 +242,7 @@ def upload_audio(microphone, file_upload, language):
         )
 
     elif (microphone is None) and (file_upload is None):
-        raise gr.Error(
-            "You have to either use the microphone or upload an audio file")
+        raise gr.Error("You have to either use the microphone or upload an audio file")
 
     file = microphone if microphone is not None else file_upload
 
@@ -238,27 +252,28 @@ def upload_audio(microphone, file_upload, language):
 
     uri = gs_url.replace("https://storage.googleapis.com/", "gs://")
 
-    if language == "Moroccan Dialect":
-        text = speech_recognition_MA_ar(link)
+    if language == "Moroccan Dialect": 
+      text = speech_recognition_MA_ar(link)
 
     elif language == "Egyptian Dialect":
-        text = speech_recognition_EG_ar(uri)
-
-    else:
-        text = "Language Not Defined"
-
+      text = speech_recognition_EG_ar(uri)
+    
+    else: 
+      text = "Language Not Defined"
+    
+    insert_row("transcription", [gs_url, text, language])
+    
     return text, "✅ Audio Successfuly Loaded"
 
 
 def download_audio(audio_link, language):
-
+    
     if audio_link.startswith("https://www.youtube.com/"):
-        link = video_download(audio_link)
-
+      link = video_download(audio_link)
+    
     else:
-        file = audio_download(audio_link)
-
-        link = preprocess_audio(file)
+      file = audio_download(audio_link)
+      link = preprocess_audio(file)
 
     print(link)
 
@@ -266,15 +281,17 @@ def download_audio(audio_link, language):
 
     uri = gs_url.replace("https://storage.googleapis.com/", "gs://")
 
-    if language == "Moroccan Dialect":
-        text = speech_recognition_MA_ar(link)
-
+    if language == "Moroccan Dialect": 
+      text = speech_recognition_MA_ar(link)
+    
     elif language == "Egyptian Dialect":
-        text = speech_recognition_EG_ar(uri)
-    else:
-        text = "Language Not Defined"
+      text = speech_recognition_EG_ar(uri)
+    else: 
+      text = "Language Not Defined"
 
-    return text, "✅ Successfuly Loaded"
+    insert_row("transcription", [gs_url, text, language])
+    
+    return text, "✅ Successfuly Loaded"  
 
 
 def do_all(file_upload, question, context, format, language):
@@ -288,17 +305,19 @@ def do_all_link(audio_link, question, context, format, language):
     return transcript, output
 
 
-def interpret(transcript, question, context, format, language):
-    if language == "Moroccan Dialect":
-        output = qa_MA_ar(transcript, question, context, format)
+def interpret(transcript, question, context, format, language): 
+  if language == "Moroccan Dialect":
+    output = qa_MA_ar(transcript, question, context, format)
+  
+  elif language == "Egyptian Dialect":
+    output = qa_EG_ar(transcript, question, context, format)
+  
+  else: 
+    output = "Language Not Defined"
 
-    elif language == "Egyptian Dialect":
-        output = qa_EG_ar(transcript, question, context, format)
+  insert_row("interpretation", [transcript, question, context, format, language])
 
-    else:
-        output = "Language Not Defined"
-
-    return output
+  return output
 
 
 Title = '<img src="https://upload-image-jshop.s3.eu-west-3.amazonaws.com/annaX-2.png" alt="Logo" width="400">'
@@ -354,25 +373,25 @@ with gr.Blocks(css="style.css") as demo:
                     ],
                     outputs=[output],
                 )
-        with gr.Row():
-            ex = gr.Examples([
-                [
-                    "hello.wav", "What is happening", "no context", "no format", "nothing",
-                ],
-                [
-                    "awb.mp4", "What is the problem of the customer?", "This is a call center recording of a bank with the client. The client recording quality is mediocre so try to deduce the problem trom the agent's clear voice", "JSON: problem", "Moroccan Dialect",
-                ],
-                [
-                    "hello.wav", "What is happening", "no context", "no format", "nothing",
-                ],
-            ],
-                fn=do_all, inputs=[
-                upload,
-                question,
-                context,
-                format,
-                language,
-            ], outputs=[transcript, output], cache_examples=True)
+        # with gr.Row():
+        #     ex = gr.Examples([
+        #         [
+        #             "hello.wav", "What is happening", "no context", "no format", "nothing",
+        #         ],
+        #         [
+        #             "awb.mp4", "What is the problem of the customer?", "This is a call center recording of a bank with the client. The client recording quality is mediocre so try to deduce the problem trom the agent's clear voice", "JSON: problem", "Moroccan Dialect",
+        #         ],
+        #         [
+        #             "hello.wav", "What is happening", "no context", "no format", "nothing",
+        #         ],
+        #     ],
+        #         fn=do_all, inputs=[
+        #         upload,
+        #         question,
+        #         context,
+        #         format,
+        #         language,
+        #     ], outputs=[transcript, output], cache_examples=True)
 
     with gr.Tab(label="Audio Link"):
         with gr.Row():
@@ -416,25 +435,25 @@ with gr.Blocks(css="style.css") as demo:
                     ],
                     outputs=[output2],
                 )
-        with gr.Row():
-            ex = gr.Examples([
-                [
-                    "hello.wav", "What is happening", "no context", "no format", "nothing",
-                ],
-                [
-                    "hello.wav", "What is happening", "no context", "no format", "nothing",
-                ],
-                [
-                    "hello.wav", "What is happening", "no context", "no format", "nothing",
-                ],
-            ],
-                fn=do_all_link, inputs=[
-                audio,
-                question,
-                context,
-                format,
-                language,
-            ], outputs=[transcript2, output2], cache_examples=True)
+        # with gr.Row():
+        #     ex = gr.Examples([
+        #         # [
+        #         #     "hello.wav", "What is happening", "no context", "no format", "nothing",
+        #         # ],
+        #         # [
+        #         #     "hello.wav", "What is happening", "no context", "no format", "nothing",
+        #         # ],
+        #         # [
+        #         #     "hello.wav", "What is happening", "no context", "no format", "nothing",
+        #         # ],
+        #     ],
+        #         fn=do_all_link, inputs=[
+        #         audio,
+        #         question,
+        #         context,
+        #         format,
+        #         language,
+        #     ], outputs=[transcript2, output2], cache_examples=True)
 
 
 demo.launch(debug=True, show_api=False,
